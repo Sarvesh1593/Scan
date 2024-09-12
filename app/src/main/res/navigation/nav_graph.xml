@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainScreen">
+
+    <fragment
+        android:id="@+id/mainScreen"
+        android:name="com.mack.docscan.ui.mainScreen.MainScreen"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/action_mainScreen_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_mainScreen_to_PDFViewer"
+            app:destination="@id/PDFViewer" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.mack.docscan.ui.mainScreen.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+        <argument
+            android:name="replaceIndex"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <action
+            android:id="@+id/action_cameraFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_cameraFragment_to_mainScreen"
+            app:destination="@id/mainScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.mack.docscan.ui.mainScreen.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" >
+        <argument
+            android:name="imageUri"
+            app:argType="string"/>
+        <argument
+            android:name="replaceIndex"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <action
+            android:id="@+id/action_editFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" >
+            <argument
+                android:name="replaceIndex"
+                app:argType="integer"
+                android:defaultValue="-1"/>
+        </action>
+        <action
+            android:id="@+id/action_editFragment_to_editPageFragment"
+            app:destination="@id/editPageFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/PDFViewer"
+        android:name="com.mack.docscan.ui.pdfViewer.PDFViewer"
+        android:label="fragment_p_d_f_viewer"
+        tools:layout="@layout/fragment_p_d_f_viewer" />
+    <fragment
+        android:id="@+id/rotateFragment"
+        android:name="com.mack.docscan.ui.RotateImage.RotateFragment"
+        android:label="RotateFragment" >
+        <action
+            android:id="@+id/action_rotateFragment_to_editPageFragment"
+            app:destination="@id/editPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPageFragment"
+        android:name="com.mack.docscan.EditPageFragment"
+        android:label="fragment_edit_page"
+        tools:layout="@layout/fragment_edit_page" >
+        <action
+            android:id="@+id/action_editPageFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_editPageFragment_to_rotateFragment"
+            app:destination="@id/rotateFragment" />
+    </fragment>
+</navigation>

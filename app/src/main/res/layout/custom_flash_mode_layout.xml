@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_15"
+    android:background="@android:color/transparent">
+
+    <ImageButton
+        android:id="@+id/btn_flash_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/off_flash"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/flash_button"/>
+
+    <ImageButton
+        android:id="@+id/btn_flash_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/on_flash"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/flash_button"/>
+
+    <ImageButton
+        android:id="@+id/btn_flash_auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/autoflash"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/flash_button"/>
+
+</LinearLayout>

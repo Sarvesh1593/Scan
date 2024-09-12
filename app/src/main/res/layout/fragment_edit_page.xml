@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".EditPageFragment">
+
+    <RelativeLayout
+        android:id="@+id/Rl_status_edit_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/chevron_left"
+            android:padding="@dimen/dp_24"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/transparent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/done"
+            android:fontFamily="@font/sf_pro_text_semibold"
+            android:textSize="17sp"
+            android:padding="@dimen/dp_18"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/head_text_color"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/IV_Page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Rl_status_edit_bar"
+        android:layout_above="@id/ll_bottom_nav"
+        android:layout_margin="@dimen/dp_15"
+        android:src="@drawable/multi_image"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/edit_page_image" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/bottom_nav_color"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_crop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/crop"
+            android:textSize="12sp"
+            android:padding="@dimen/dp_15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_2"
+            android:textColor="@color/sub_heading_text_color"
+            app:drawableTopCompat="@drawable/crop" />
+
+        <TextView
+            android:id="@+id/tv_rotate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rotate"
+            android:textSize="12sp"
+            android:padding="@dimen/dp_15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_2"
+            android:textColor="@color/sub_heading_text_color"
+            app:drawableTopCompat="@drawable/rotate" />
+
+        <TextView
+            android:id="@+id/tv_filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filter"
+            android:textSize="12sp"
+            android:padding="@dimen/dp_15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_2"
+            android:textColor="@color/sub_heading_text_color"
+            app:drawableTopCompat="@drawable/filter" />
+
+        <TextView
+            android:id="@+id/tv_contrast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/contrast"
+            android:textSize="12sp"
+            android:padding="@dimen/dp_20"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_2"
+            android:textColor="@color/sub_heading_text_color"
+            app:drawableTopCompat="@drawable/setting" />
+
+    </LinearLayout>
+
+</RelativeLayout>

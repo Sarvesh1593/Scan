@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/onboard_iv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/onboard_image"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/icons"/>
+
+    <TextView
+        android:id="@+id/onboard_heading_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/colfax_medium"
+        android:layout_gravity="center"
+        android:textSize="@dimen/heading_text_size"
+        android:textColor="@color/head_text_color"
+        android:layout_marginTop="80dp"
+        android:text="@string/welcome_to_the_docscan"/>
+
+    <TextView
+        android:id="@+id/onboard_subheading_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quickly_scan_sign_and_share_document_with_any_format"
+        android:fontFamily="@font/colfax_regular"
+        android:layout_gravity="center"
+        android:textSize="@dimen/subheading_text_size"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/sub_heading_text_color"
+        android:layout_marginTop="@dimen/dp_24"
+        />
+
+
+</LinearLayout>

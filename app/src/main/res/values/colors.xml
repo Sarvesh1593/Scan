@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="head_text_color">#F7F8FA</color>
+    <color name="bg_color">#060910</color>
+    <color name="sub_heading_text_color">#D8D9DB</color>
+    <color name="selector_text_color_m">#D8D9DB</color>
+    <color name="non_selector_tv_color">#848C9A</color>
+    <color name="floating_btn_color">#2373FE</color>
+    <color name="button_color_uploadFile">#172131</color>
+    <color name="bottom_nav_color">#161B29</color>
+    <color name="scan_more_btn">#35383F</color>
+    <color name="save_btn_color">#4B68FF</color>
+</resources>
