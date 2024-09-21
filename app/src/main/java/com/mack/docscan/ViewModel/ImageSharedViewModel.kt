@@ -17,6 +17,13 @@ class ImageSharedViewModel : ViewModel() {
     private val _imageUri = MutableLiveData<Uri?>()
     val imageUri: LiveData<Uri?> get() = _imageUri
 
+    // MutableLiveData to hold the recognized text
+    private val _recognizedText = MutableLiveData<String>()
+
+    // Public LiveData to expose the recognized text to observers
+    val recognizedText: LiveData<String>
+        get() = _recognizedText
+
     fun addImage(uri: Uri) {
         _imageUris.value?.add(uri)
         _imageUris.postValue(_imageUris.value)
@@ -25,6 +32,11 @@ class ImageSharedViewModel : ViewModel() {
         _imageUri.value = uri
     }
 
+
+    // Method to update the recognized text
+    fun setRecognizedText(text: String) {
+        _recognizedText.value = text
+    }
     fun replaceImage(uri: Uri, index: Int) {
         val list = _imageUris.value ?: mutableListOf()
         if (index in list.indices) {

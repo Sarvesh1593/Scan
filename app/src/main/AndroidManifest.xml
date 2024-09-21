@@ -52,6 +52,9 @@
 
         <activity android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/Base.Theme.DocScan"/>
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr"/>
     </application>
 
 </manifest>

@@ -58,6 +58,10 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
 
+
+    implementation ("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
+    implementation ("com.google.android.gms:play-services-vision:20.1.3")
+
     val camerax_version = "1.3.4" // Replace with the latest version
     //noinspection GradleDependency
     implementation ("androidx.camera:camera-core:${camerax_version}")

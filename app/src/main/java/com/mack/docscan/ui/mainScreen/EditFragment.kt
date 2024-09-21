@@ -2,6 +2,7 @@ package com.mack.docscan.ui.mainScreen
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,13 +13,15 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.mack.docscan.Adapter.DocumentPagerAdapter
 import com.mack.docscan.ViewModel.ImageSharedViewModel
-import com.mack.docscan.ViewModel.RotateSharedViewModel
 import com.mack.docscan.databinding.FragmentEditBinding
+import com.mack.docscan.utils.ImageUtils
 
 
 class EditFragment : Fragment() {
@@ -28,6 +31,7 @@ class EditFragment : Fragment() {
     private lateinit var adapter: DocumentPagerAdapter
     private lateinit var imageSharedViewModel: ImageSharedViewModel
     private lateinit var currentImageUri : Uri
+    private var recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,7 +79,8 @@ class EditFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageSharedViewModel = ViewModelProvider(requireActivity())[ImageSharedViewModel::class.java]
+        imageSharedViewModel =
+            ViewModelProvider(requireActivity())[ImageSharedViewModel::class.java]
         setUpPager()
 
         imageSharedViewModel.imageUris.observe(viewLifecycleOwner) { uri ->
@@ -86,16 +91,44 @@ class EditFragment : Fragment() {
             viewPager.currentItem = index
         }
         binding?.btnRetake?.setOnClickListener {
-            Log.d("retake",it.toString())
+            Log.d("retake", it.toString())
             val currentPage = viewPager.currentItem
             imageSharedViewModel.setCurrentIndex(currentPage)
             findNavController().navigate(EditFragmentDirections.actionEditFragmentToCameraFragment())
         }
-        binding?.btnScanMore?.setOnClickListener{
-            Log.d("ScanMore",it.toString())
+        binding?.btnScanMore?.setOnClickListener {
+            Log.d("ScanMore", it.toString())
             imageSharedViewModel.setCurrentIndex(-1)
             findNavController().navigate(EditFragmentDirections.actionEditFragmentToCameraFragment())
         }
+
+        binding?.OCR?.setOnClickListener {
+            val bitmapImage = ImageUtils.loadImageFromUri(requireContext(), currentImageUri)
+            processOCRImage(bitmapImage!!,
+                onSuccess = { scannedText ->
+                    Log.d("Text Recognition", scannedText)
+                    imageSharedViewModel.setRecognizedText(scannedText)
+                    findNavController().navigate(EditFragmentDirections.actionEditFragmentToOCRFragment())
+                },
+                onFailure = { exception ->
+                    Log.d("TextRecognition", "Error recognizing text", exception)
+                })
+
+
+        }
+    }
+
+    // find the ocr of the image
+    private fun processOCRImage(bitmap: Bitmap, onSuccess : (String)-> Unit, onFailure: (Exception) -> Unit ){
+        val image = InputImage.fromBitmap(bitmap,0)
+        recognizer.process(image)
+            .addOnSuccessListener { result ->
+                val scannedText = result.text
+                onSuccess(scannedText)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
 
     }
 

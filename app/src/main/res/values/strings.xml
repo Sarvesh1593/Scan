@@ -58,5 +58,6 @@
     <string name="option">option</string>
     <string name="title">Title</string>
     <string name="rotate">Rotate</string>
+    <string name="this_is_a_customizable_textview_you_can_copy_share_or_select_all_text">This is a customizable TextView. You can copy, share, or select all text.</string>
 
 </resources>
