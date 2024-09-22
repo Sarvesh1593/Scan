@@ -35,7 +35,7 @@ class UploadFileDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = BottmSheetDialogUploadBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         return _binding.root
     }

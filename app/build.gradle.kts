@@ -75,4 +75,6 @@ dependencies {
 
     implementation ("com.github.yalantis:ucrop:2.2.8")
 
+    implementation ("jp.co.cyberagent.android:gpuimage:2.1.0")
+
 }

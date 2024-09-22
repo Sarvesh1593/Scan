@@ -13,24 +13,16 @@ object ImageUtils {
     private const val TAG = "ImageUtils"
 
     // Function to load image from URI
-    fun loadImageFromUri(context: Context, uri: Uri?): Bitmap? {
-        if (uri == null) {
-            Log.e(TAG, "URI is null")
-            return null
-        }
+    fun loadImageFromUri(context: Context, uri: Uri?): Bitmap {
 
-        return try {
-            val inputStream = context.contentResolver.openInputStream(uri)
+            val inputStream = uri?.let { context.contentResolver.openInputStream(it) }
             val bitmap = BitmapFactory.decodeStream(inputStream)
             inputStream?.close()
 
             // Log the bitmap dimensions
             Log.d(TAG, "Bitmap loaded with dimensions: ${bitmap?.width}x${bitmap?.height}")
             bitmap
-        } catch (e: Exception) {
-            Log.e(TAG, "Error loading image from URI", e)
-            null
-        }
+        return  bitmap
     }
 
     // Function to convert bitmap to URI

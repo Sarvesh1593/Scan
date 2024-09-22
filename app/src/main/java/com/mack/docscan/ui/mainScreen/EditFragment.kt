@@ -113,8 +113,6 @@ class EditFragment : Fragment() {
                 onFailure = { exception ->
                     Log.d("TextRecognition", "Error recognizing text", exception)
                 })
-
-
         }
     }
 
