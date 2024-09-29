@@ -32,6 +32,7 @@ class EditPageFragment : Fragment() {
     private lateinit var rotateSharedViewModel: RotateSharedViewModel
     private lateinit var imageSharedViewModel: ImageSharedViewModel
     private var currentUri: Uri? = null
+    private var currentIndex : Int? = 0
     private lateinit var cropActivityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var filterBottomDialog: FilterBottomDialog
     private lateinit var originalBitmap : Bitmap
@@ -91,6 +92,9 @@ class EditPageFragment : Fragment() {
             updateImageView(uri)
             originalBitmap = loadImageFromUri(requireContext(),uri)
         }
+        imageSharedViewModel.currentIndex.observe(viewLifecycleOwner){ index ->
+             currentIndex = index
+        }
 
         binding?.tvFilter?.setOnClickListener {
             showBottomSheetDialog()
@@ -100,6 +104,10 @@ class EditPageFragment : Fragment() {
             applyContrast()
         }
 
+        binding?.btnDone?.setOnClickListener{
+            imageSharedViewModel.updateImageAtIndex(currentUri!!,currentIndex!!)
+            findNavController().popBackStack()
+        }
     }
 
     // apply the contrast in the image

@@ -20,6 +20,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.mack.docscan.Adapter.DocumentPagerAdapter
 import com.mack.docscan.ViewModel.ImageSharedViewModel
+import com.mack.docscan.ViewModel.RotateSharedViewModel
 import com.mack.docscan.databinding.FragmentEditBinding
 import com.mack.docscan.utils.ImageUtils
 
@@ -51,6 +52,8 @@ class EditFragment : Fragment() {
         }
         binding?.btnEdit?.setOnClickListener {
             imageSharedViewModel.setImageUri(currentImageUri)
+            val currentPage = viewPager.currentItem
+            imageSharedViewModel.setCurrentIndex(currentPage)
             findNavController().navigate(EditFragmentDirections.actionEditFragmentToEditPageFragment())
         }
         // This button do for retaking the photo and replacing the existing photo
@@ -81,6 +84,7 @@ class EditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         imageSharedViewModel =
             ViewModelProvider(requireActivity())[ImageSharedViewModel::class.java]
+
         setUpPager()
 
         imageSharedViewModel.imageUris.observe(viewLifecycleOwner) { uri ->
@@ -89,6 +93,11 @@ class EditFragment : Fragment() {
 
         imageSharedViewModel.currentIndex.observe(viewLifecycleOwner) { index ->
             viewPager.currentItem = index
+        }
+
+        imageSharedViewModel.imageUris.observe(viewLifecycleOwner){ uriList ->
+            adapter.updateData(uriList)
+            adapter.notifyItemChanged(imageSharedViewModel.currentIndex.value?:0)
         }
         binding?.btnRetake?.setOnClickListener {
             Log.d("retake", it.toString())

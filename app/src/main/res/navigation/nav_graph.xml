@@ -38,20 +38,9 @@
         android:name="com.mack.docscan.ui.mainScreen.EditFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_edit" >
-        <argument
-            android:name="imageUri"
-            app:argType="string"/>
-        <argument
-            android:name="replaceIndex"
-            app:argType="integer"
-            android:defaultValue="-1"/>
         <action
             android:id="@+id/action_editFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" >
-            <argument
-                android:name="replaceIndex"
-                app:argType="integer"
-                android:defaultValue="-1"/>
         </action>
         <action
             android:id="@+id/action_editFragment_to_editPageFragment"
