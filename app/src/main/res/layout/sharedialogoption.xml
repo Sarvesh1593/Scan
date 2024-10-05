@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share_single_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_single_page"
+        android:textSize="16sp"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share_entire_document"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_entire_document"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/dp_10"/>
+
+</LinearLayout>

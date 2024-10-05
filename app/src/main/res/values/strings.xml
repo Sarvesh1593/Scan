@@ -61,5 +61,8 @@
     <string name="this_is_a_customizable_textview_you_can_copy_share_or_select_all_text">This is a customizable TextView. You can copy, share, or select all text.</string>
     <string name="original">ORIGINAL</string>
     <string name="filterpreview">filterpreview</string>
+    <string name="share_single_page">Share Single Page</string>
+    <string name="share_entire_document">Share Entire Document</string>
+    <string name="share_pdf">Share Pdf</string>
 
 </resources>

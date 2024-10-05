@@ -106,7 +106,7 @@ class EditPageFragment : Fragment() {
 
         binding?.btnDone?.setOnClickListener{
             imageSharedViewModel.updateImageAtIndex(currentUri!!,currentIndex!!)
-            findNavController().popBackStack()
+            findNavController().navigate(EditPageFragmentDirections.actionEditPageFragmentToEditFragment())
         }
     }
 

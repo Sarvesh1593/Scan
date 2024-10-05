@@ -2,6 +2,7 @@ package com.mack.docscan.ui.mainScreen
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,10 +24,14 @@ import com.mack.docscan.Adapter.DocumentPagerAdapter
 import com.mack.docscan.ViewModel.ImageSharedViewModel
 import com.mack.docscan.ViewModel.RotateSharedViewModel
 import com.mack.docscan.databinding.FragmentEditBinding
+import com.mack.docscan.dialog.ShareOptionDialog
+import com.mack.docscan.dialog.SharePDFBottomDialog
 import com.mack.docscan.utils.ImageUtils
+import com.mack.docscan.utils.PDFWriterUtil
+import java.io.File
 
 
-class EditFragment : Fragment() {
+class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
 
     private var binding : FragmentEditBinding? = null
     private lateinit var viewPager: ViewPager2
@@ -123,6 +129,14 @@ class EditFragment : Fragment() {
                     Log.d("TextRecognition", "Error recognizing text", exception)
                 })
         }
+        binding?.shareButton?.setOnClickListener {
+            showShareOptionDialog()
+        }
+    }
+
+    private fun showShareOptionDialog() {
+         val dialog = ShareOptionDialog(this)
+        dialog.show(parentFragmentManager,"ShareOptionDialog")
     }
 
     // find the ocr of the image
@@ -162,6 +176,36 @@ class EditFragment : Fragment() {
         if (imageSharedViewModel.currentIndex.value != -1) {
             imageSharedViewModel.resetIndex()
         }
+    }
+
+    override fun onSinglePageShare() {
+       val shareIntent = Intent(Intent.ACTION_SEND).apply {
+           putExtra(Intent.EXTRA_STREAM,currentImageUri)
+           addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+           type = "image/jpeg"
+       }
+
+        startActivity(Intent.createChooser(shareIntent,"Share Image via"))
+    }
+
+    override fun onEntireDocumentShare() {
+        val imageUriList = imageSharedViewModel.imageUris.value ?: emptyList()
+
+        val pdfWriterUtil = PDFWriterUtil()
+
+        val directoryPath = requireContext().getExternalFilesDir(null)?.path + "/PDFs"
+        val pdfFile = File(directoryPath,"Scanned_image.pdf")
+
+        if(!pdfFile.parentFile?.exists()!!){
+            pdfFile.parentFile?.mkdirs()
+        }
+
+        pdfWriterUtil.generatePdfFromImages(requireContext(),imageUriList)
+
+
+        val sharePDFBottomDialog  = SharePDFBottomDialog(requireContext(),pdfFile)
+        sharePDFBottomDialog.show(parentFragmentManager,"Share PDF Dialog")
+
     }
 }
 
