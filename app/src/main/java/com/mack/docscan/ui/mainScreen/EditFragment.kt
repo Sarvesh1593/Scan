@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,10 +21,9 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.mack.docscan.Adapter.DocumentPagerAdapter
 import com.mack.docscan.ViewModel.ImageSharedViewModel
-import com.mack.docscan.ViewModel.RotateSharedViewModel
 import com.mack.docscan.databinding.FragmentEditBinding
 import com.mack.docscan.dialog.ShareOptionDialog
-import com.mack.docscan.dialog.SharePDFBottomDialog
+import com.mack.docscan.bottom_dialog.SharePDFBottomDialog
 import com.mack.docscan.utils.ImageUtils
 import com.mack.docscan.utils.PDFWriterUtil
 import java.io.File
@@ -179,6 +177,7 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
     }
 
     override fun onSinglePageShare() {
+
        val shareIntent = Intent(Intent.ACTION_SEND).apply {
            putExtra(Intent.EXTRA_STREAM,currentImageUri)
            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

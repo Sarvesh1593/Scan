@@ -1,4 +1,4 @@
-package com.mack.docscan.dialog
+package com.mack.docscan.bottom_dialog
 
 import android.content.Context
 import android.content.Intent
@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.FileProvider
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mack.docscan.ViewModel.ImageSharedViewModel
 import com.mack.docscan.databinding.SharedpdfbottomdialogBinding
 import java.io.File
 
