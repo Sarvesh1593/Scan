@@ -1,4 +1,4 @@
-package com.mack.docscan
+package com.mack.docscan.ui.mainScreen
 
 import android.app.Activity
 import android.content.Intent
@@ -119,6 +119,7 @@ class EditPageFragment : Fragment() {
 
         // Set the filtered bitmap to your ImageView (replace `imageView` with your actual ImageView)
         binding?.IVPage?.setImageBitmap(filteredBitmap)
+        currentUri = bitmapToUri(requireContext(),filteredBitmap)
     }
     private fun showBottomSheetDialog() {
          filterBottomDialog = FilterBottomDialog(originalBitmap) {filteredBitmap ->

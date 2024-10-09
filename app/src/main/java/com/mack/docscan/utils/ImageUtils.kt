@@ -23,7 +23,6 @@ object ImageUtils {
 
         // Log the bitmap dimensions
         Log.d(TAG, "Bitmap loaded with dimensions: ${bitmap?.width}x${bitmap?.height}")
-        bitmap
         return bitmap
     }
 

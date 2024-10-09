@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/editPageFragment"
-        android:name="com.mack.docscan.EditPageFragment"
+        android:name="com.mack.docscan.ui.mainScreen.EditPageFragment"
         android:label="fragment_edit_page"
         tools:layout="@layout/fragment_edit_page" >
         <action

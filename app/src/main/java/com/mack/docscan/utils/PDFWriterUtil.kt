@@ -77,8 +77,8 @@ class PDFWriterUtil {
             val directoryPath = context.getExternalFilesDir(null)?.path + "/PDFs"
             val pdfFile = File(directoryPath, "scanned_images.pdf")
 
-            if (!pdfFile.parentFile.exists()) {
-                pdfFile.parentFile.mkdirs()
+            if (!pdfFile.parentFile?.exists()!!) {
+                pdfFile.parentFile?.mkdirs()
             }
 
             val outputStream = FileOutputStream(pdfFile)

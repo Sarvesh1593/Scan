@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -24,9 +25,17 @@ import com.mack.docscan.ViewModel.ImageSharedViewModel
 import com.mack.docscan.databinding.FragmentEditBinding
 import com.mack.docscan.dialog.ShareOptionDialog
 import com.mack.docscan.bottom_dialog.SharePDFBottomDialog
+import com.mack.docscan.database.documentdatabase.Document
+import com.mack.docscan.database.documentdatabase.DocumentDatabase
+import com.mack.docscan.database.pagedatabase.Page
+import com.mack.docscan.database.pagedatabase.PageDatabase
 import com.mack.docscan.utils.ImageUtils
 import com.mack.docscan.utils.PDFWriterUtil
+import kotlinx.coroutines.launch
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
@@ -117,7 +126,8 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
 
         binding?.OCR?.setOnClickListener {
             val bitmapImage = ImageUtils.loadImageFromUri(requireContext(), currentImageUri)
-            processOCRImage(bitmapImage!!,
+            processOCRImage(
+                bitmapImage,
                 onSuccess = { scannedText ->
                     Log.d("Text Recognition", scannedText)
                     imageSharedViewModel.setRecognizedText(scannedText)
@@ -129,6 +139,9 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
         }
         binding?.shareButton?.setOnClickListener {
             showShareOptionDialog()
+        }
+        binding?.btnSave?.setOnClickListener {
+            saveDocument()
         }
     }
 
@@ -163,25 +176,14 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-        Glide.get(requireActivity()).clearMemory()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (imageSharedViewModel.currentIndex.value != -1) {
-            imageSharedViewModel.resetIndex()
-        }
-    }
 
     override fun onSinglePageShare() {
+
 
        val shareIntent = Intent(Intent.ACTION_SEND).apply {
            putExtra(Intent.EXTRA_STREAM,currentImageUri)
            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-           type = "image/jpeg"
+           type = "image/png"
        }
 
         startActivity(Intent.createChooser(shareIntent,"Share Image via"))
@@ -205,6 +207,43 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
         val sharePDFBottomDialog  = SharePDFBottomDialog(requireContext(),pdfFile)
         sharePDFBottomDialog.show(parentFragmentManager,"Share PDF Dialog")
 
+    }
+
+    private fun saveDocument(){
+        val imageUriList = imageSharedViewModel.imageUris.value ?: return
+        val documentName = "DocScan" + SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(
+            Date()
+        ).toString()
+
+        val document = Document(
+            name = documentName,
+            imagePath = currentImageUri.toString(),
+            pageCount = imageUriList.size,
+        )
+
+        lifecycleScope.launch {
+            val documentId = DocumentDatabase.getInstance(requireContext()).documentDao().insert(document)
+
+            imageUriList.forEach { uri ->
+                val pagePath = uri.toString()
+                val page = Page(documentId = documentId, path = pagePath)
+
+                PageDatabase.getInstance(requireContext()).pageDao().insert(page)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+        Glide.get(requireActivity()).clearMemory()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (imageSharedViewModel.currentIndex.value != -1) {
+            imageSharedViewModel.resetIndex()
+        }
     }
 }
 
