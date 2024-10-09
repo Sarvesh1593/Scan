@@ -13,11 +13,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mack.docscan.Adapter.DocumentAdapter
 import com.mack.docscan.R
 import com.mack.docscan.ViewModel.SharedViewModel
 import com.mack.docscan.bottom_dialog.UploadFileDialog
+import com.mack.docscan.database.documentdatabase.Document
+import com.mack.docscan.database.documentdatabase.DocumentDatabase
 import com.mack.docscan.databinding.FragmentMainScreenBinding
+import kotlinx.coroutines.launch
 
 
 class MainScreen : Fragment() {
@@ -26,6 +33,7 @@ class MainScreen : Fragment() {
     private val binding get() = _binding!!
     private val bottomSheetDialogFragment = UploadFileDialog()
     private lateinit var viewModel : SharedViewModel
+    private lateinit var  recyclerView: RecyclerView
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +64,17 @@ class MainScreen : Fragment() {
         viewModel.pdfUri.observe(viewLifecycleOwner) { uri ->
             if (uri != null) {
                 findNavController().navigate(R.id.action_mainScreen_to_PDFViewer)
+            }
+        }
+        recyclerView = binding.documentRv
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        lifecycleScope.launch {
+            val documentDao = DocumentDatabase.getInstance(requireContext()).documentDao()
+            documentDao.getAllDocuments().observe(viewLifecycleOwner) { documentList ->
+                val adapter = DocumentAdapter(documentList)
+
+                recyclerView.adapter = adapter
             }
         }
     }

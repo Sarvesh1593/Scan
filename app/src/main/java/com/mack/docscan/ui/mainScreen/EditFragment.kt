@@ -21,6 +21,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.mack.docscan.Adapter.DocumentPagerAdapter
+import com.mack.docscan.R
 import com.mack.docscan.ViewModel.ImageSharedViewModel
 import com.mack.docscan.databinding.FragmentEditBinding
 import com.mack.docscan.dialog.ShareOptionDialog
@@ -78,13 +79,13 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
         AlertDialog.Builder(requireContext())
             .setTitle("Exit Confirmation")
             .setMessage("Do you want to delete the images and exit or save them?")
-            .setPositiveButton("Delete and Exit") { _, _ ->
+            .setPositiveButton("Save and Exit") { _, _ ->
                 // Handle delete and exit
-                imageSharedViewModel.clearImageUris()
+                saveDocument()
                 activity?.finish() // Exit the app or navigate to another activity/fragment
             }
-            .setNegativeButton("Save and Exit") { _, _ ->
-                // Handle save and exit
+            .setNegativeButton("Delete and Exit") { _, _ ->
+                imageSharedViewModel.clearImageUris()
                 activity?.finish() // Exit the app or navigate to another activity/fragment
             }
             .setNeutralButton("Cancel", null) // Do nothing on cancel
@@ -231,6 +232,7 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
                 PageDatabase.getInstance(requireContext()).pageDao().insert(page)
             }
         }
+        findNavController().navigate(EditFragmentDirections.actionEditFragmentToMainScreen())
     }
 
     override fun onDestroy() {

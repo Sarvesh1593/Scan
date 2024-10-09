@@ -64,5 +64,7 @@
     <string name="share_single_page">Share Single Page</string>
     <string name="share_entire_document">Share Entire Document</string>
     <string name="share_pdf">Share Pdf</string>
+    <string name="show_document_image">show document image</string>
+    <string name="docscan_10_2_2024_10_00">DocScan 10/2/2024 10:00</string>
 
 </resources>

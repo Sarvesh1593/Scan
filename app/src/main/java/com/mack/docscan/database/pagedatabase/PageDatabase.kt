@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.mack.docscan.database.documentdatabase.DocumentDatabase.Companion.MIGRATION_1_2
 
-@Database(entities = [Page::class], version = 1, exportSchema = false)
+@Database(entities = [Page::class], version = 2, exportSchema = false)
 abstract class PageDatabase : RoomDatabase() {
     abstract fun pageDao() : PageDao
 
@@ -19,7 +20,7 @@ abstract class PageDatabase : RoomDatabase() {
                     PageDatabase::class.java,
                     "page_database"
                 )
-                    .fallbackToDestructiveMigration()
+                    .addMigrations(MIGRATION_1_2)
                     .build()
                 INSTANCE = instance
                 instance

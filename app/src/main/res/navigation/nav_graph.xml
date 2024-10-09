@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_editFragment_to_OCRFragment"
             app:destination="@id/OCRFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_mainScreen"
+            app:destination="@id/mainScreen" />
     </fragment>
 
 
