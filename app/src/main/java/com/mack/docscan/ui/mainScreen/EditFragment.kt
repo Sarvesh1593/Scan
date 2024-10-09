@@ -227,7 +227,11 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
 
             imageUriList.forEach { uri ->
                 val pagePath = uri.toString()
-                val page = Page(documentId = documentId, path = pagePath)
+                val documentname = "DocScan" + SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(
+                    Date()
+                ).toString()
+
+                val page = Page(documentId = documentId, path = pagePath, documentName = documentname)
 
                 PageDatabase.getInstance(requireContext()).pageDao().insert(page)
             }

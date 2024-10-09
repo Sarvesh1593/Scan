@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainScreen_to_PDFViewer"
             app:destination="@id/PDFViewer" />
+        <action
+            android:id="@+id/action_mainScreen_to_documentDetailFragment"
+            app:destination="@id/documentDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -86,5 +89,14 @@
         <action
             android:id="@+id/action_OCRFragment_to_editFragment"
             app:destination="@id/editFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentDetailFragment"
+        android:name="com.mack.docscan.ui.mainScreen.DocumentDetailFragment"
+        android:label="fragment_document_detail"
+        tools:layout="@layout/fragment_document_detail" >
+        <argument
+            android:name="documentId"
+            app:argType="integer" />
     </fragment>
 </navigation>

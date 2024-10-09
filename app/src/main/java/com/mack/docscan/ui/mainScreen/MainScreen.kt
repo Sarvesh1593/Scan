@@ -72,9 +72,15 @@ class MainScreen : Fragment() {
         lifecycleScope.launch {
             val documentDao = DocumentDatabase.getInstance(requireContext()).documentDao()
             documentDao.getAllDocuments().observe(viewLifecycleOwner) { documentList ->
-                val adapter = DocumentAdapter(documentList)
-
-                recyclerView.adapter = adapter
+                if (documentList != null) {
+                    // Create the adapter and pass the click listener for documentId
+                    val adapter = DocumentAdapter(documentList) { documentId ->
+                        // Handle the click to navigate to the new fragment
+                        val action = MainScreenDirections.actionMainScreenToDocumentDetailFragment(documentId)
+                        findNavController().navigate(action)
+                    }
+                    recyclerView.adapter = adapter
+                }
             }
         }
     }

@@ -8,5 +8,6 @@ data class Page(
     @PrimaryKey(autoGenerate = true)
     val pageId: Int =0,
     var documentId: Long,
-    val path: String
+    val path: String,
+    val documentName : String
 )

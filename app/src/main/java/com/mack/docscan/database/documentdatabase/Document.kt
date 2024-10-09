@@ -10,4 +10,5 @@ data class Document(
     val name : String,
     val imagePath : String,
     val pageCount : Int
-)
+) {
+}
