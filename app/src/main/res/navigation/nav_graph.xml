@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_mainScreen_to_documentDetailFragment"
             app:destination="@id/documentDetailFragment" />
+        <action
+            android:id="@+id/action_mainScreen_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -99,4 +102,12 @@
             android:name="documentId"
             app:argType="integer" />
     </fragment>
+    <dialog
+        android:id="@+id/uploadFileDialog"
+        android:name="com.mack.docscan.bottom_dialog.UploadFileDialog"
+        android:label="UploadFileDialog" >
+        <action
+            android:id="@+id/action_uploadFileDialog_to_editFragment"
+            app:destination="@id/editFragment" />
+    </dialog>
 </navigation>

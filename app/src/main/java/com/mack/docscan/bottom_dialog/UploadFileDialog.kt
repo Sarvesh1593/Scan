@@ -14,9 +14,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mack.docscan.R
+import com.mack.docscan.ViewModel.ImageSharedViewModel
 import com.mack.docscan.ViewModel.SharedViewModel
 import com.mack.docscan.databinding.BottmSheetDialogUploadBinding
 
@@ -25,6 +27,7 @@ class UploadFileDialog : BottomSheetDialogFragment() {
     private var binding: BottmSheetDialogUploadBinding? = null
     private val _binding get() = binding!!
     private lateinit var viewModel: SharedViewModel
+    private lateinit var imageSharedViewModel : ImageSharedViewModel
 
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private lateinit var galleryPickerLauncher: ActivityResultLauncher<Intent>
@@ -36,6 +39,7 @@ class UploadFileDialog : BottomSheetDialogFragment() {
     ): View {
         binding = BottmSheetDialogUploadBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        imageSharedViewModel = ViewModelProvider(requireActivity()) [ImageSharedViewModel::class.java]
 
         return _binding.root
     }
@@ -60,17 +64,27 @@ class UploadFileDialog : BottomSheetDialogFragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 val singleImage: Uri? = data?.data
-                if (data != null) {
-                    if (data.clipData != null) {
-                        val count = data.clipData!!.itemCount
-                        for (i in 0 until count) {
-                            val imageUri = data.clipData!!.getItemAt(i).uri
-                            // Handle the image URI
-                        }
+
+                if (singleImage != null){
+                    imageSharedViewModel.addGalleryImage(singleImage)
+                    // In UploadFileDialog
+                    NavHostFragment.findNavController(this).navigate(R.id.action_mainScreen_to_editFragment)
+
+                    dismiss()
+                }
+
+                val clipData = data?.clipData
+                if(clipData != null){
+                    val imageUris = mutableListOf<Uri>()
+                    val count = clipData.itemCount
+                    for(i in 0 until count){
+                        imageUris.add(clipData.getItemAt(i).uri)
                     }
-                } else if (singleImage != null) {
-                    val imageUri = singleImage
-                    // Handle the single image URI
+                    imageSharedViewModel.addGalleryImages(imageUris)
+                    // In UploadFileDialog
+                    NavHostFragment.findNavController(this).navigate(R.id.action_mainScreen_to_editFragment)
+
+                    dismiss()
                 }
             }
         }

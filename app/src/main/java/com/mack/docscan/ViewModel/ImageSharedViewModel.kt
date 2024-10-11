@@ -28,6 +28,22 @@ class ImageSharedViewModel : ViewModel() {
         }
     }
 
+    // New method for adding a single gallery image
+    fun addGalleryImage(uri: Uri) {
+        _imageUris.value?.let {
+            it.add(uri)
+            _imageUris.postValue(it)
+        }
+    }
+
+    // New method for adding multiple gallery images
+    fun addGalleryImages(uris: List<Uri>) {
+        _imageUris.value?.let {
+            it.addAll(uris)
+            _imageUris.postValue(it) // Notify observers of the change
+        }
+    }
+
     // Replace image URI at a specific index
     fun replaceImage(uri: Uri, index: Int) {
         _imageUris.value?.let { list ->

@@ -108,7 +108,6 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
         imageSharedViewModel.currentIndex.observe(viewLifecycleOwner) { index ->
             viewPager.currentItem = index
         }
-
         imageSharedViewModel.imageUris.observe(viewLifecycleOwner){ uriList ->
             adapter.updateData(uriList)
             adapter.notifyItemChanged(imageSharedViewModel.currentIndex.value?:0)
@@ -124,7 +123,6 @@ class EditFragment : Fragment(), ShareOptionDialog.ShareDialogListener {
             imageSharedViewModel.setCurrentIndex(-1)
             findNavController().navigate(EditFragmentDirections.actionEditFragmentToCameraFragment())
         }
-
         binding?.OCR?.setOnClickListener {
             val bitmapImage = ImageUtils.loadImageFromUri(requireContext(), currentImageUri)
             processOCRImage(

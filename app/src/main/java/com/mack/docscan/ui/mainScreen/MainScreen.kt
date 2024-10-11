@@ -59,7 +59,7 @@ class MainScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         viewModel.pdfUri.observe(viewLifecycleOwner) { uri ->
             if (uri != null) {
@@ -100,7 +100,6 @@ class MainScreen : Fragment() {
             if(isGranted){
                 Log.d("Permissions", "$permissionName granted")
             }
-
         }
     }
     override fun onDestroy() {
